@@ -1,0 +1,14 @@
+*.class
+*.txt
+*.doc
+*.iml
+*.zip
+
+# Directories #
+*.idea/
+out/
+
+# Package Files #
+*.jar
+*.war
+*.ear
