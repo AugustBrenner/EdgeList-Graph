@@ -11,7 +11,7 @@
  * G00682282
  *
  * @version
- *   December 15th, 2013
+ *   December 18th, 2013
  ******************************************************************************/
 public class EdgeNode {
     // Invariant of EdgeNode:

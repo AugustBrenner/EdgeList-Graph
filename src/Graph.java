@@ -1,12 +1,20 @@
+/******************************************************************************
+ *
+ * The Graph class models a graph data structure using an array of linked lists and
+ *  a separate array of objects able to store labels for each vertex
+ *
+ * @see
+ *   <A HREF="https://github.com/AugustBrenner">
+ *       Checkout my GitHub</A>
+ *
+ * @author
+ * August Brenner
+ * G00682282
+ *
+ * @version
+ *   December 18th, 2013
+ ******************************************************************************/
 
-
-/**
- * Created with IntelliJ IDEA.
- * User: Ryan
- * Date: 12/10/13
- * Time: 10:51 AM
- * To change this template use File | Settings | File Templates.
- */
 // Import dependencies
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,8 +23,10 @@ public class Graph<E> implements Cloneable {
     // Invariant of Graph class:
     // vertexList must store labels for the edges
     // in this Graph class
-    ArrayList<E> vertexList;
-    LinkedList<EdgeNode>[] edges;
+    // Edges must store LinkedLists of vertexes for each vertex
+    private E[] vertexList;
+    private LinkedList<EdgeNode>[] edges;
+
 
     /**
      * Initializes a Graph with n vertices,
@@ -35,6 +45,7 @@ public class Graph<E> implements Cloneable {
     public Graph ( int n ) {
         if ( n >= 0 ) {
             edges = new LinkedList[n];
+            vertexList = (E[]) new Object[n];
         } else {
             throw new NegativeArraySizeException("ArrayList size must be positive");
         }
@@ -55,6 +66,9 @@ public class Graph<E> implements Cloneable {
     public void addEdge(int source, int target){
         if(source >= 0 && source < size() && target >= 0 && target < size()){
             EdgeNode input = new EdgeNode(target);
+            if(edges[source] == null){
+                edges[source] = new LinkedList<EdgeNode>();
+            }
             if(!edges[source].contains(input)){
                 edges[source].add(input);
             }
@@ -76,7 +90,9 @@ public class Graph<E> implements Cloneable {
      */
     public void removeEdge(int source, int target){
         if(source >= 0 && source < size() && target >= 0 && target < size()){
+            if(edges[source] != null && edges[target] != null){
                 edges[source].remove(new EdgeNode(target));
+            }
         } else {
             throw new ArrayIndexOutOfBoundsException("Source or Target out of bounds.");
         }
@@ -97,7 +113,11 @@ public class Graph<E> implements Cloneable {
      */
     public boolean isEdge(int source, int target){
         if(source >= 0 && source < size() && target >= 0 && target < size()){
-            return edges[source].contains(new EdgeNode(target));
+            if(edges[source] != null && edges[target] != null){
+                return edges[source].contains(new EdgeNode(target));
+            }else{
+                return false;
+            }
         } else {
             throw new ArrayIndexOutOfBoundsException("Source or Target out of bounds.");
         }
@@ -117,7 +137,7 @@ public class Graph<E> implements Cloneable {
      */
     public void setLabel(int vertex, E newLabel){
         if(vertex >= 0 && vertex < size()){
-            vertexList.add(vertex, newLabel);
+            vertexList[vertex] = newLabel;
         } else {
             throw new ArrayIndexOutOfBoundsException("Source or Target out of bounds.");
         }
@@ -138,10 +158,22 @@ public class Graph<E> implements Cloneable {
      */
     public E getLabel(int vertex){
         if(vertex >= 0 && vertex < size()){
-            return vertexList.get(vertex);
+            return vertexList[vertex];
         } else {
             throw new ArrayIndexOutOfBoundsException("Source or Target out of bounds.");
         }
+    }
+
+
+    /**
+     * Accessor method to get all labels of this Graph.
+     * @return
+     *  An array of all labels of this graph.
+     * <dt><b>Postcondition:</b></dt>
+     *  The Graph is unchanged.
+     */
+    public Object[] getAllLabels(){
+        return vertexList;
     }
 
 

@@ -1,3 +1,20 @@
+/******************************************************************************
+ *
+ * ArrayQueue
+ *  a Queue data structure implementing FIFO functionality with an array
+ *  based implementation.
+ *
+ * @see
+ *   <A HREF="https://github.com/AugustBrenner">
+ *       Checkout my GitHub</A>
+ *
+ * @author
+ * August Brenner
+ * G00682282
+ *
+ * @version
+ *   December 18th, 2013
+ ******************************************************************************/
 
 public class ArrayQueue 
 {
